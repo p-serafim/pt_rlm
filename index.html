@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Videoaulas · Português e Raciocínio Lógico</title>
+<style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#0d0f12;--card:#14171b;--card2:#181c21;--line:#242a31;--tx:#e9ecef;--mut:#8a93a0;--red:#e5484d;--red2:#ff6a6f;--gold:#e8b04a;--ok:#3dd68c;
+--h:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--m:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 56px}
+header{display:flex;gap:14px;align-items:center;padding:0 0 22px}
+header svg{width:38px;height:38px;flex:none;color:var(--red2)}
+h1{font:600 22px/1.2 var(--h);letter-spacing:-.01em;margin:0}
+h1 b{color:var(--red2);font-weight:600}
+.sub{color:var(--mut);font:12px var(--m);letter-spacing:.02em}
+.tape{display:none}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.st{background:var(--card);border:1px solid var(--line);padding:14px 16px;border-radius:12px}
+.st small{display:block;color:var(--mut);font:500 11px var(--h);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.st strong{font:600 20px var(--h)}
+.bar{height:6px;background:#20252b;border-radius:99px;overflow:hidden;margin:18px 0 8px}
+.bar i{display:block;height:100%;width:0;background:var(--red);border-radius:99px;transition:width .4s}
+.today{margin:20px 0;border:1px solid var(--line);border-left:3px solid var(--red);background:var(--card);padding:16px 18px;border-radius:12px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.today h2{margin:2px 0;font:600 18px var(--h)}
+button,.btn{font:500 13px var(--h);background:var(--red);color:#fff;border:1px solid transparent;padding:9px 16px;border-radius:8px;cursor:pointer;transition:.15s}
+button:hover{background:var(--red2)}
+button.ghost{background:transparent;border-color:var(--line);color:var(--mut)}
+button.ghost:hover{color:var(--tx);border-color:#343b44}
+button.ghost.on{background:#20252b;border-color:#343b44;color:var(--tx)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:20px 0 14px}
+.tools label{color:var(--mut);font:12px var(--h);margin-left:auto}
+.tools label+label{margin-left:0}
+input[type=date],input[type=number],input[type=text],textarea{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:13px var(--h);outline:none}
+input:focus{border-color:#3a424b}
+.grid{display:flex;flex-direction:column;gap:8px}
+.m{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .15s}
+.m:hover{border-color:#333a42}
+.mh{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;user-select:none}
+.mh .n{min-width:60px;font:600 15px var(--h)}
+.mh .n span{color:var(--mut);font-weight:400;margin-right:1px}
+.mh p{flex:1;margin:0;color:var(--mut);font-size:13px;line-height:1.35}
+.tag{flex:none;font:500 11px var(--m);padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.mini{width:56px;height:3px;background:#20252b;border-radius:99px;overflow:hidden;flex:none}
+.mini i{display:block;height:100%;background:var(--ok)}
+.chev{color:var(--mut);font-size:13px;width:14px;flex:none;text-align:center}
+.m.done{background:#111613;border-color:#1c3326}.m.done .tag{color:var(--ok);border-color:#1f5538}
+.m.cur{border-color:#5a2a2e}.m.cur .tag{color:var(--red2);border-color:#5a2a2e}
+.m.late .tag{color:var(--gold);border-color:#5c4a22}
+.m.open{border-color:#343b44}.m.open .mh{background:var(--card2)}
+.mb{border-top:1px solid var(--line);padding:14px 16px 16px;display:grid;gap:10px;background:var(--card)}
+.ck{display:flex;gap:12px;align-items:flex-start;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
+.ck input{margin-top:3px;accent-color:var(--red);width:17px;height:17px;flex:none}
+.ck b{display:block;font:500 14px var(--h)}
+.ck span{color:var(--mut);font:12px var(--h)}
+.ck.on{opacity:.5}.ck.on b{text-decoration:line-through}
+.pl{display:inline-block;margin-top:8px;color:var(--red2);font:500 12px var(--h);text-decoration:none;border:1px solid var(--line);padding:4px 11px;border-radius:7px;transition:.15s}
+.pl:hover{background:#20252b;border-color:#343b44}
+.rg{margin-left:auto;flex:none;text-align:center;background:#1f1214;border:1px solid #5a2a2e;border-radius:10px;padding:7px 14px;min-width:84px}
+.rg small{display:block;font:500 10px var(--h);text-transform:uppercase;letter-spacing:.1em;color:var(--mut)}
+.ck .rg b{display:block;font:600 18px/1.25 var(--h);color:var(--red2);white-space:nowrap;text-decoration:none}
+@media(max-width:520px){.ck{flex-wrap:wrap}.rg{margin-left:29px;display:flex;gap:8px;align-items:baseline;padding:5px 12px}.rg small{display:inline}.ck .rg b{display:inline;font-size:15px}}
+#bal{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:center;gap:9px;background:#1f1214;border:1px solid #5a2a2e;color:var(--tx);padding:8px 15px;border-radius:99px;font:600 14px var(--m);cursor:pointer;box-shadow:0 6px 24px #000a}
+#bal[hidden]{display:none}
+#bal i{width:8px;height:8px;border-radius:50%;background:var(--red2);animation:bl 1.2s infinite}
+#bal em{font:500 11px var(--h);color:var(--mut);font-style:normal}
+@keyframes bl{50%{opacity:.25}}
+#rd{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+#rd[hidden]{display:none}
+.rt{display:flex;align-items:center;gap:8px 10px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--card);flex-wrap:wrap}
+.rtt{flex:1;min-width:150px;line-height:1.3}.rtt b{display:block;font:600 13px var(--h)}
+.rtt span{font:12px var(--m);color:var(--mut);cursor:pointer}.rtt span.in{color:var(--ok)}
+.rn{display:flex;align-items:center;gap:6px;font:500 13px var(--m)}
+.rt button{padding:7px 12px}.rt .pl{margin:0}
+#rv{flex:1;overflow:auto;background:#0a0b0d;padding:12px;-webkit-overflow-scrolling:touch}
+#rc{display:block;margin:0 auto;max-width:none;background:#fff;border-radius:4px}
+#rc.inv{filter:invert(.9) hue-rotate(180deg)}
+#rmsg{color:var(--mut);font:13px/1.7 var(--h);padding:28px 8px;text-align:center}#rmsg:empty{display:none}#rmsg:not(:empty)+#rc{display:none}
+#rmsg input{margin-top:10px;color:var(--mut);font:13px var(--h)}
+#rbar{display:flex;gap:10px;justify-content:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--card)}
+#rbar button{padding:13px 18px;font-size:15px}#rbar #rbn{flex:1;max-width:340px}
+#rext{display:none}button:disabled{opacity:.35;cursor:default}
+body.reading #bal{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+.tools label.dt{margin-left:auto;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid #5a2a2e;color:var(--tx);font:500 13px var(--h);padding:5px 6px 5px 12px;border-radius:8px}
+.tools label.dt.need{border-color:var(--red2);box-shadow:0 0 0 3px #ff6a6f26}
+@media(max-width:520px){.tools label.dt{width:100%;justify-content:space-between}}
+.note{color:var(--mut);font:12px/1.5 var(--h);margin-top:28px;padding-top:14px;border-top:1px solid var(--line)}
+@media(max-width:520px){.mh .mini{display:none}.mh p{font-size:12px}.tools label{margin-left:0}h1{font-size:19px}}
+
+:root{--red:#2fa36b;--red2:#4ade98}
+.rg,#bal{background:#0e1f17;border-color:#245a3d}
+.m.cur{border-color:#245a3d}.m.cur .tag{color:var(--red2);border-color:#245a3d}
+.m.td{border-color:var(--gold)}.m.td .tag{color:var(--gold);border-color:#5c4a22}
+.wk{color:var(--mut);font:500 11px var(--h);text-transform:uppercase;letter-spacing:.1em;margin:16px 2px 0}
+.wk:first-child{margin-top:0}
+.mh .dd{color:var(--mut);font:12px var(--m);min-width:74px}
+.mh p{display:flex;flex-wrap:wrap;gap:2px 14px}
+.dc{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.dc i{width:8px;height:8px;border-radius:50%;flex:none}
+.ck em{color:var(--gold);font-style:normal;font-size:11px}
+.ck span{line-height:1.5}
+.tp{display:flex;gap:10px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card2);font-size:13px;line-height:1.4}
+.tp b{flex:none;width:16px;color:var(--ok);font-weight:500}.tp div{flex:1}.tp small{display:block;color:var(--mut);font:11.5px var(--m);margin-top:2px}
+.tabs{display:flex;gap:8px;margin:20px 0 12px}
+@media(max-width:520px){.mh .dd{min-width:62px;font-size:11px}.mh p{font-size:12px}}
+
+.vt{margin:0}.vt .ck{margin:0}.vt+.vt{margin-top:8px}
+.lk{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center}.lk .pl{margin:0}
+.lk button{padding:4px 10px;font-size:12px}
+.ck .rg{display:none}
+.mh .n{min-width:0}
+.mb{gap:0}
+</style></head><body><div class="wrap">
+<header><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+<div><h1>Videoaulas · <b>Português</b> e <b>Raciocínio Lógico</b></h1><div class="sub">IMA SC · ANALISTA DE INFORMÁTICA · TÓPICOS DA APOSTILA</div></div></header>
+<div class="stats">
+<div class="st"><small>Tópicos estudados</small><strong id="a">0/0</strong></div>
+<div class="st"><small>Língua Portuguesa</small><strong id="b">0/0</strong></div>
+<div class="st"><small>Raciocínio Lógico</small><strong id="c">0/0</strong></div>
+</div>
+<div class="bar"><i id="pb"></i></div><div class="sub" id="pt"></div>
+<div class="grid" id="grid" style="margin-top:18px"></div>
+<div class="note">Os botões abrem a busca do YouTube já com o assunto do tópico (aula e questões comentadas). Escolha o vídeo que preferir e, se quiser, use "colar meu vídeo" para guardar o link dele no tópico. Tudo fica salvo neste aparelho.</div>
+</div><script>
+const D={"mods":[{"n":"Língua Portuguesa","c":"#ff7aa8","s":"português concurso","t":[["5.1","Compreensão e Interpretação de Textos de Diferentes Gêneros",351,357],["5.2","Identificação de Informações Explícitas e Implícitas, Inferências e Pressupostos",358,364],["5.3","Reconhecimento de Tipos e Gêneros Textuais: Características e Finalidades",365,376],["5.4","Funções da Linguagem e Figuras de Linguagem",377,384],["5.5","Coesão Textual: Referenciação, Substituição, Elipse e Conectividade",385,392],["5.6","Coerência Textual e Progressão Temática",393,398],["5.7","Relações de Sentido: Conectivos e Operadores Argumentativos",399,406],["5.8","Ortografia Oficial e Acentuação Gráfica",407,413],["5.9","Uso dos Porquês",414,418],["5.10","Morfologia: Estrutura e Formação de Palavras (Derivação e Composição)",419,424],["5.11","Classes de Palavras: Substantivo, Artigo, Adjetivo, Pronome e Numeral",425,433],["5.12","Classes de Palavras: Verbo, Advérbio, Preposição, Conjunção e Interjeição",434,440],["5.13","Emprego de Tempos e Modos Verbais e Seus Efeitos de Sentido",441,452],["5.14","Sintaxe: Termos Essenciais, Integrantes e Acessórios da Oração",453,461],["5.15","Sintaxe: Período Simples e Composto (Coordenação e Subordinação)",462,468],["5.16","Concordância Verbal e Nominal",469,476],["5.17","Regência Verbal e Nominal",477,482],["5.18","Emprego do Sinal Indicativo de Crase",483,488],["5.19","Colocação dos Pronomes Átonos",489,493],["5.20","Pontuação: Emprego dos Sinais e Efeitos de Sentido",494,500],["5.21","Semântica: Denotação, Conotação, Sinônimos e Antônimos",501,506],["5.22","Semântica: Hipônimos, Hiperônimos, Polissemia e Ambiguidade",507,512],["5.23","Reescrita Textual: Substituição de Termos e Manutenção do Sentido",513,519],["5.24","Reescrita Textual: Reorganização de Estruturas Sintáticas e Correção Gramatical",520,525],["5.25","Variação Linguística: norma-padrão e Adequação Situacional",526,532]]},{"n":"Raciocínio Lógico-Matemático","c":"#f5a623","s":"raciocínio lógico concurso","t":[["3.1","Estruturas Lógicas: Relações entre Pessoas, Lugares, Objetos e Eventos",144,149],["3.2","Dedução de Informações e Avaliação de Condições Necessárias e Suficientes",150,154],["3.3","Raciocínio Verbal, Matemático, Sequencial, Espacial e Temporal",155,161],["3.4","Problemas Aritméticos e Geométricos",162,166],["3.5","Números Inteiros e Racionais: Operações, Decimais e Frações",167,174],["3.6","Razões e Proporções e Divisão em Partes Proporcionais",175,181],["3.7","Regra de Três Simples e Composta",182,186],["3.8","Porcentagem",187,193],["3.9","Princípios de Contagem e Análise Combinatória Básica",194,200],["3.10","Probabilidade",201,207],["3.11","Operações com Conjuntos",208,214],["3.12","Sistema Métrico: Medidas de Tempo, Comprimento, Área e Volume",215,220],["3.13","Interpretação e Análise de Gráficos e Tabelas",221,231],["3.14","Média Aritmética Simples e Ponderada",232,236],["3.15","Sequências, Padrões e Regularidades Lógicas",237,243],["3.16","Lógica Proposicional: Proposições, Conectivos e Valores Lógicos",244,250],["3.17","Equivalências Lógicas e Negações",251,256],["3.18","Inferências, Argumentos e Relações de Implicação",257,263],["3.19","Formação de Conceitos, Classificação e Discriminação de Elementos",264,268],["3.20","Resolução de situações-problema Envolvendo Raciocínio Lógico",269,277]]}]},$=id=>document.getElementById(id);
+let S={ok:{},lk:{}};try{S=Object.assign(S,JSON.parse(localStorage.getItem('ptrl1')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('ptrl1',JSON.stringify(S))}catch(e){}};
+let open=0;
+const yt=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+const clean=n=>n.replace(/\([^)]*\)/g,'').replace(/\s+/g,' ').trim().slice(0,90);
+const pg=(a,b)=>a===b?'pág. '+a:'págs. '+a+'–'+b;
+function topic(m,t){const k=t[0],on=!!S.ok[k],my=S.lk[k],q=clean(t[1]);
+ return `<div class="vt" data-k="${k}"><label class="ck${on?' on':''}" style="border-left:3px solid ${m.c}"><input type="checkbox"${on?' checked':''}><div><b>${k} ${t[1]}</b><span>Apostila (opcional): ${pg(t[2],t[3])}</span><div class="lk"><a class="pl" target="_blank" rel="noopener" href="${yt(q+' aula '+m.s)}">▶ Videoaula</a><a class="pl" target="_blank" rel="noopener" href="${yt(q+' questões comentadas '+m.s)}">Questões comentadas</a>${my?`<a class="pl" target="_blank" rel="noopener" href="${my}">▶ Meu vídeo</a><button class="ghost" data-act="rm">remover</button>`:`<button class="ghost" data-act="add">+ colar meu vídeo</button>`}</div></div></label></div>`}
+function render(){let tot=0,done=0;const cnt=D.mods.map(m=>{const d=m.t.filter(t=>S.ok[t[0]]).length;tot+=m.t.length;done+=d;return d});
+ $('a').textContent=done+'/'+tot;$('b').textContent=cnt[0]+'/'+D.mods[0].t.length;$('c').textContent=cnt[1]+'/'+D.mods[1].t.length;
+ $('pb').style.width=done/tot*100+'%';$('pt').textContent=Math.round(done/tot*100)+'% concluído';
+ $('grid').innerHTML=D.mods.map((m,i)=>{const d=cnt[i],o=open===i;return `<div class="m${d===m.t.length?' done':''}${o?' open':''}" data-i="${i}"><div class="mh"><span class="dc"><i style="background:${m.c}"></i></span><div class="n" style="flex:1;font-size:15px">${m.n}</div><span class="tag">${d}/${m.t.length}</span><div class="mini"><i style="width:${d/m.t.length*100}%"></i></div><span class="chev">${o?'▾':'▸'}</span></div>${o?`<div class="mb">${m.t.map(t=>topic(m,t)).join('')}</div>`:''}</div>`}).join('')}
+const G=$('grid');
+G.addEventListener('click',e=>{const b=e.target.closest('button[data-act]');
+ if(b){e.preventDefault();const k=b.closest('.vt').dataset.k;
+  if(b.dataset.act==='add'){const u=(prompt('Cole o link do vídeo (começando com https://)')||'').trim();if(/^https?:\/\//i.test(u)){S.lk[k]=u;save();render()}else if(u)alert('Link inválido.')}
+  else{delete S.lk[k];save();render()}return}
+ if(e.target.closest('.mh')){const i=+e.target.closest('.m').dataset.i;open=open===i?-1:i;render()}});
+G.addEventListener('change',e=>{if(e.target.type!=='checkbox')return;const k=e.target.closest('.vt').dataset.k;if(e.target.checked)S.ok[k]=1;else delete S.ok[k];save();render()});
+render();
+</script></body></html>
